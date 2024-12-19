@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <!-- Это пример конфигурации с словарем -->
+    <!-- Конфигурация для базы данных -->
     <dictionary>
         <entry>
             <name>database.host</name>
@@ -19,7 +19,8 @@
             <value>password123</value>
         </entry>
     </dictionary>
-    <!-- Константы -->
+
+    <!-- Константы для подключения к базе данных -->
     <constant>
         <name>MAX_CONNECTIONS</name>
         <value>100</value>

@@ -3,26 +3,59 @@ package org.example;
 import org.w3c.dom.*;
 import javax.xml.parsers.*;
 import java.io.*;
+import java.util.Scanner;
+
+import static gen.lib.cgraph.scan__c.input;
 
 public class ConfigTransformer {
     public static void main(String[] args) throws Exception {
-        // Задаем путь к XML файлу вручную
-        String filePath = "D:\\Универ\\2_курс\\НиАСПО\\konfig3\\second.xml"; // Укажите свой путь
-
-        // Создаем объект для парсинга XML
+        String filePath = "D:\\Универ\\2_курс\\НиАСПО\\konfig3\\first.xml";
+        if (args.length > 0) {
+            filePath = args[0]; // Если путь передан в командной строке, используем его
+        } else {
+            // Если нет, просим пользователя ввести путь к файлу вручную
+            System.out.println("Введите путь к XML файлу:");
+            try (Scanner scanner = new Scanner(System.in)) {
+                filePath = scanner.nextLine();
+            }
+        }
         File inputFile = new File(filePath);
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document doc = builder.parse(inputFile);
 
-        // Нормализуем XML, чтобы избавиться от лишних пробелов
         doc.getDocumentElement().normalize();
 
-        // Печать комментариев
-        System.out.println("C Это конфигурация сервера");
-
-        // Преобразование данных: ищем словари (dictionary)
         NodeList dictionaries = doc.getElementsByTagName("dictionary");
+        String configType = "Неизвестная конфигурация";
+        for (int i = 0; i < dictionaries.getLength(); i++) {
+            Node dictionary = dictionaries.item(i);
+            NodeList entries = dictionary.getChildNodes();
+            for (int j = 0; j < entries.getLength(); j++) {
+                Node entry = entries.item(j);
+                if (entry.getNodeType() == Node.ELEMENT_NODE) {
+                    String name = null;
+                    NodeList children = entry.getChildNodes();
+                    for (int k = 0; k < children.getLength(); k++) {
+                        Node child = children.item(k);
+                        if (child.getNodeName().equals("name")) {
+                            name = child.getTextContent();
+                        }
+                    }
+                    if (name != null && name.contains("database")) {
+                        configType = "C Это конфигурация базы данных";
+                        break;
+                    }
+                    if (name != null && name.contains("server")) {
+                        configType = "C Это конфигурация веб-сервера";
+                        break;
+                    }
+                }
+            }
+        }
+
+        System.out.println(configType);
+
         if (dictionaries.getLength() > 0) {
             Node dictionary = dictionaries.item(0);
             NodeList entries = dictionary.getChildNodes();
@@ -49,7 +82,6 @@ public class ConfigTransformer {
             System.out.println("]");
         }
 
-        // Преобразование констант
         NodeList constants = doc.getElementsByTagName("constant");
         for (int i = 0; i < constants.getLength(); i++) {
             Node constant = constants.item(i);

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <!-- Пример другого конфигурационного файла -->
+    <!-- Конфигурация для веб-сервера -->
     <dictionary>
         <entry>
             <name>server.hostname</name>
@@ -11,12 +11,14 @@
             <value>8080</value>
         </entry>
     </dictionary>
-    <constant>
-        <name>API_KEY</name>
-        <value>12345-abcde</value>
-    </constant>
+
+    <!-- Константы для веб-сервера -->
     <constant>
         <name>MAX_REQUESTS</name>
         <value>500</value>
+    </constant>
+    <constant>
+        <name>TIMEOUT</name>
+        <value>60</value>
     </constant>
 </configuration>
