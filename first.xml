@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- Это пример конфигурации с словарем -->
+    <dictionary>
+        <entry>
+            <name>database.host</name>
+            <value>localhost</value>
+        </entry>
+        <entry>
+            <name>database.port</name>
+            <value>5432</value>
+        </entry>
+        <entry>
+            <name>database.user</name>
+            <value>admin</value>
+        </entry>
+        <entry>
+            <name>database.password</name>
+            <value>password123</value>
+        </entry>
+    </dictionary>
+    <!-- Константы -->
+    <constant>
+        <name>MAX_CONNECTIONS</name>
+        <value>100</value>
+    </constant>
+    <constant>
+        <name>TIMEOUT</name>
+        <value>30</value>
+    </constant>
+</configuration>
